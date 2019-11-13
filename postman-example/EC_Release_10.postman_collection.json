@@ -1,0 +1,375 @@
+{
+	"variables": [],
+	"info": {
+		"name": "EC Release 10",
+		"_postman_id": "2620717d-29df-23a3-4708-7bb3777b6f60",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Subscription Request",
+			"request": {
+				"url": "https://demo-ec.apps.ge.com/v2beta/subscriptions/create",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{BEARER_TOKEN}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "adminToken",
+							"value": "{{EC_ADMIN_TOKEN}}",
+							"type": "text"
+						},
+						{
+							"key": "applicationRole",
+							"value": "web-services",
+							"type": "text"
+						},
+						{
+							"key": "bucAdn",
+							"value": "123-ABC",
+							"type": "text"
+						},
+						{
+							"key": "cluster",
+							"value": "ec-dont-need-it",
+							"type": "text"
+						},
+						{
+							"key": "compliance",
+							"value": "whatever-coretech-youwanted",
+							"type": "text"
+						},
+						{
+							"key": "confidentiality",
+							"value": "false",
+							"type": "text"
+						},
+						{
+							"key": "customer",
+							"value": "EC_TEAM",
+							"type": "text"
+						},
+						{
+							"key": "date",
+							"value": "2019/08/22",
+							"description": "yyyy/mm/dd",
+							"type": "text"
+						},
+						{
+							"key": "environment",
+							"value": "TEST",
+							"description": "TEST,DEV,STAGE,PROD",
+							"type": "text"
+						},
+						{
+							"key": "managementHostType",
+							"value": "whatever-coretech-youwanted",
+							"type": "text"
+						},
+						{
+							"key": "optInoptOut",
+							"value": "false",
+							"type": "text"
+						},
+						{
+							"key": "owner",
+							"value": "EC_TEAM",
+							"type": "text"
+						},
+						{
+							"key": "preserve",
+							"value": "false",
+							"type": "text"
+						},
+						{
+							"key": "project",
+							"value": "RELEASE",
+							"type": "text"
+						},
+						{
+							"key": "security",
+							"value": "whatever-coretech-youwanted",
+							"type": "text"
+						},
+						{
+							"key": "serviceUri",
+							"value": "{{EC_SERVICE_URL}}",
+							"type": "text"
+						},
+						{
+							"key": "subscriptionId",
+							"value": "{{PX_ZONE_ID}}",
+							"type": "text"
+						},
+						{
+							"key": "subscriptionName",
+							"value": "EC_TEAM_PX_ACCOUNT",
+							"type": "text"
+						},
+						{
+							"key": "version",
+							"value": "v2beta",
+							"type": "text"
+						}
+					]
+				},
+				"description": "Create EC Subscription request for approval."
+			},
+			"response": []
+		},
+		{
+			"name": "Approve Subscription Request",
+			"request": {
+				"url": "https://demo-ec.apps.ge.com/v2beta/subscriptions/{{PX_ZONE_ID}}/approve/admin",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "approve",
+							"value": "APPROVED",
+							"description": "APPROVED,DECLINED,PENDING",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Check Approval Status",
+			"request": {
+				"url": "https://demo-ec.apps.ge.com/v2beta/subscriptions/{{PX_ZONE_ID}}/checkStatus",
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Create EC2 Components For EC AWS Subscription",
+			"request": {
+				"url": "https://demo-ec.apps.ge.com/v2beta/subscriptions/aws/ec2/admin",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"imageId\": \"ami-035b3c7efe6d061d5\",\n  \"instanceType\": \"t2.micro\",\n  \"maxCount\": 1,\n  \"minCount\": 1,\n  \"subnetId\": \"subnet-a97307d3\",\n  \"subsid\": \"e27fc834-28be-4851-9d6a-b7033d568270\"\n}\n"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Create ELB Com. for EC AWS Subscription",
+			"request": {
+				"url": {
+					"raw": "https://demo-ec.apps.ge.com/v2beta/aws/elb/{{PX_ZONE_ID}}/admin?subscriptionid={{PX_ZONE_ID}}",
+					"protocol": "https",
+					"host": [
+						"demo-ec",
+						"apps",
+						"ge",
+						"com"
+					],
+					"path": [
+						"v2beta",
+						"aws",
+						"elb",
+						"{{PX_ZONE_ID}}",
+						"admin"
+					],
+					"query": [
+						{
+							"key": "subscriptionid",
+							"value": "{{PX_ZONE_ID}}"
+						}
+					],
+					"variable": []
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"Subnets\": [\"subnet-a97307d3\",\"subnet-ac714fc4\",\"subnet-ad27fbe1\"],\n    \"AvailabilityZones\": [\"us-east-2b\",\"us-east-2a\",\"us-east-2c\"],\n    \"Tags\": [\n        {\n            \"key\": \"Product-Name\",\n            \"value\": \"Enterprise-Connect\"\n        }\n    ]\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Create a Target Group in an existing ELB",
+			"request": {
+				"url": {
+					"raw": "https://demo-ec.apps.ge.com/v2beta/aws/targetgroup/{{PX_ZONE_ID}}/admin?subscriptionid={{PX_ZONE_ID}}",
+					"protocol": "https",
+					"host": [
+						"demo-ec",
+						"apps",
+						"ge",
+						"com"
+					],
+					"path": [
+						"v2beta",
+						"aws",
+						"targetgroup",
+						"{{PX_ZONE_ID}}",
+						"admin"
+					],
+					"query": [
+						{
+							"key": "subscriptionid",
+							"value": "{{PX_ZONE_ID}}"
+						}
+					],
+					"variable": []
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"Protocol\": \"HTTP\",\n        \"Port\": 80,\n        \"TargetType\": \"instance\",\n        \"TagrgetGroupTags\": [\n            {\n                \"key\": \"Target Group Key1\",\n                \"value\": \"Target Group Value1\"\n            },\n            {\n                \"key\": \"Target Group Key2\",\n                \"value\": \"Target Group Value2\"\n            }\n        ]\n    }\n"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Create a Listener in an existing ELB",
+			"request": {
+				"url": {
+					"raw": "https://demo-ec.apps.ge.com/v2beta/aws/elb/listener/{{PX_ZONE_ID}}/admin?subscriptionid={{PX_ZONE_ID}}",
+					"protocol": "https",
+					"host": [
+						"demo-ec",
+						"apps",
+						"ge",
+						"com"
+					],
+					"path": [
+						"v2beta",
+						"aws",
+						"elb",
+						"listener",
+						"{{PX_ZONE_ID}}",
+						"admin"
+					],
+					"query": [
+						{
+							"key": "subscriptionid",
+							"value": "{{PX_ZONE_ID}}"
+						}
+					],
+					"variable": []
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n    {\n        \"InstantPort\": 81,\n        \"LoadBalancerPort\": 82,\n        \"Protocol\": \"HTTP\"\n    },\n    {\n        \"InstantPort\": 83,\n        \"LoadBalancerPort\": 84,\n        \"Protocol\": \"HTTP\"\n    }\n]\n"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Bootstrap a AWS Configuration",
+			"request": {
+				"url": {
+					"raw": "https://demo-ec.apps.ge.com/v2beta/aws/elb/listener/{{PX_ZONE_ID}}/admin?subscriptionid={{PX_ZONE_ID}}",
+					"protocol": "https",
+					"host": [
+						"demo-ec",
+						"apps",
+						"ge",
+						"com"
+					],
+					"path": [
+						"v2beta",
+						"aws",
+						"elb",
+						"listener",
+						"{{PX_ZONE_ID}}",
+						"admin"
+					],
+					"query": [
+						{
+							"key": "subscriptionid",
+							"value": "{{PX_ZONE_ID}}"
+						}
+					],
+					"variable": []
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n    {\n        \"InstantPort\": 81,\n        \"LoadBalancerPort\": 82,\n        \"Protocol\": \"HTTP\"\n    },\n    {\n        \"InstantPort\": 83,\n        \"LoadBalancerPort\": 84,\n        \"Protocol\": \"HTTP\"\n    }\n]\n"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
